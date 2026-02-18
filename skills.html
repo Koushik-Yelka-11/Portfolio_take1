@@ -1,141 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skills — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="skills.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills — Portfolio</title>
+    <script src="skills.js" defer></script>
+    <link rel="stylesheet" href="skills.css">
+  </head>
 
-<header class="page-header">
-  
-</header>
+  <body>
+    <header class="page-header"></header>
+    
+    <div class="scene" id="scene">
 
-<div class="scene" id="scene">
-  <!-- Decorative ellipse rings -->
-  <div class="ring ring-1"></div>
-  <div class="ring ring-2"></div>
+      <div class="avatar-wrap" id="avatarWrap"> <img src="/assets/coding1.png" alt="Me" id="avatarImg" /></div>
 
-  <!--
-    ══════════════════════════════════════════
-    CENTER AVATAR
-    → Replace src="your-photo.png" with your actual image file path
-    ══════════════════════════════════════════
-  -->
-  <div class="avatar-wrap" id="avatarWrap">
-    <img src="your-photo.png" alt="Me" id="avatarImg" />
-  </div>
-
-  <!--
-    ══════════════════════════════════════════
-    26 SKILL ICONS
-    → Replace each src="icon-XX.png" with your actual icon image paths
-    → Update data-label to the tool name (shown on hover tooltip)
-    → Keep all 26 divs — they are auto-placed on the ellipse by JS
-    ══════════════════════════════════════════
-  -->
-  <div class="icon-item" data-label="HTML5">     <img src="/assets/icons/html.png" alt="HTML5"></div>
-  <div class="icon-item" data-label="CSS3">      <img src="icon-02.png" alt="CSS3"></div>
-  <div class="icon-item" data-label="JavaScript"><img src="icon-03.png" alt="JavaScript"></div>
-  <div class="icon-item" data-label="TypeScript"><img src="icon-04.png" alt="TypeScript"></div>
-  <div class="icon-item" data-label="Figma">     <img src="icon-05.png" alt="Figma"></div>
-  <div class="icon-item" data-label="Python">    <img src="icon-06.png" alt="Python"></div>
-  <div class="icon-item" data-label="Flask">     <img src="icon-07.png" alt="Flask"></div>
-  <div class="icon-item" data-label="MySQL">     <img src="icon-08.png" alt="MySQL"></div>
-  <div class="icon-item" data-label="LaTeX">     <img src="icon-09.png" alt="LaTeX"></div>
-  <div class="icon-item" data-label="VS Code">   <img src="icon-10.png" alt="VS Code"></div>
-  <div class="icon-item" data-label="Java">      <img src="icon-11.png" alt="Java"></div>
-  <div class="icon-item" data-label="Dart">      <img src="icon-12.png" alt="Dart"></div>
-  <div class="icon-item" data-label="Eclipse">   <img src="icon-13.png" alt="Eclipse"></div>
-  <div class="icon-item" data-label="npm">       <img src="icon-14.png" alt="npm"></div>
-  <div class="icon-item" data-label="PyCharm">   <img src="icon-15.png" alt="PyCharm"></div>
-  <div class="icon-item" data-label="Kali Linux"><img src="icon-16.png" alt="Kali Linux"></div>
-  <div class="icon-item" data-label="GitHub">    <img src="icon-17.png" alt="GitHub"></div>
-  <div class="icon-item" data-label="Windows">   <img src="icon-18.png" alt="Windows"></div>
-  <div class="icon-item" data-label="macOS">     <img src="icon-19.png" alt="macOS"></div>
-  <div class="icon-item" data-label="Tailwind">  <img src="icon-20.png" alt="Tailwind"></div>
-  <div class="icon-item" data-label="React">     <img src="icon-21.png" alt="React"></div>
-  <div class="icon-item" data-label="PostgreSQL"><img src="icon-22.png" alt="PostgreSQL"></div>
-  <div class="icon-item" data-label="MongoDB">   <img src="icon-23.png" alt="MongoDB"></div>
-  <div class="icon-item" data-label="Flutter">   <img src="icon-24.png" alt="Flutter"></div>
-  <div class="icon-item" data-label="Vite">      <img src="icon-25.png" alt="Vite"></div>
-  <div class="icon-item" data-label="Node.js">   <img src="icon-26.png" alt="Node.js"></div>
-</div>
-
-<div class="section-title">
-  <p>My toolkit</p>
-  <h1>Tech <span>Stack</span></h1>
-</div>
-<div class="count-badge">26</div>
-
-<script>
-(function () {
-  // ── Ellipse dimensions ──────────────────────────────────────────
-  const RX = 295;    // half-width  of the ellipse path (px)
-  const RY = 178;    // half-height of the ellipse path (px)
-  const SPEED = 0.00035; // radians per millisecond  (adjust to taste)
-
-  // ── Collect all icon elements ───────────────────────────────────
-  const items = Array.from(document.querySelectorAll('.icon-item'));
-  const total = items.length; // 26
-
-  // Assign each icon a starting angle evenly around the ellipse
-  const angles = items.map((_, i) => (i / total) * 2 * Math.PI);
-
-  // ── Avatar fallback ─────────────────────────────────────────────
-  const avatarImg = document.getElementById('avatarImg');
-  avatarImg.onerror = function () {
-    document.getElementById('avatarWrap').innerHTML =
-      '<div class="avatar-fallback">🧑🏻‍💻</div>';
-  };
-
-  // ── Icon image fallback ─────────────────────────────────────────
-  items.forEach(item => {
-    const img = item.querySelector('img');
-    img.onerror = function () {
-      // Show initials if image missing
-      const label = item.getAttribute('data-label') || '?';
-      const abbr  = label.slice(0, 2).toUpperCase();
-      item.innerHTML =
-        `<span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.02em;">${abbr}</span>`;
-    };
-  });
-
-  // ── Animation loop ──────────────────────────────────────────────
-  let lastTime = null;
-
-  function frame(ts) {
-    if (lastTime === null) lastTime = ts;
-    const dt = ts - lastTime;
-    lastTime = ts;
-
-    angles.forEach((angle, i) => {
-      angles[i] = angle + SPEED * dt;
-    });
-
-    items.forEach((el, i) => {
-      const a = angles[i];
-      const x = RX * Math.cos(a);
-      const y = RY * Math.sin(a);
-
-      // Depth: icons at the bottom (sin > 0) are "closer" → scale up slightly
-      const depth = (Math.sin(a) + 1) / 2; // 0 … 1
-      const scale = 0.80 + 0.28 * depth;
-      const opacity = 0.70 + 0.30 * depth;
-      const zIndex  = Math.round(1 + 18 * depth);
-
-      el.style.transform = `translate(calc(-50% + ${x.toFixed(2)}px), calc(-50% + ${y.toFixed(2)}px)) scale(${scale.toFixed(3)})`;
-      el.style.opacity   = opacity.toFixed(2);
-      el.style.zIndex    = zIndex;
-    });
-
-    requestAnimationFrame(frame);
-  }
-
-  requestAnimationFrame(frame);
-})();
-</script>
-</body>
+      <!-- Frontend Development -->
+      <div class="icon-item" data-label="HTML5">     <img src="/assets/icons/html.png" alt="HTML5"></div>
+      <div class="icon-item" data-label="CSS3">      <img src="/assets/icons/css.png" alt="CSS3"></div>
+      <div class="icon-item" data-label="JavaScript"><img src="/assets/icons/javascript.png" alt="JavaScript"></div>
+      <div class="icon-item" data-label="TypeScript"><img src="/assets/icons/typescript.png" alt="TypeScript"></div>
+      <!-- Frontend Libraries & Tools -->
+      <div class="icon-item" data-label="Tailwind">  <img src="/assets/icons/tailwind.png" alt="Tailwind"></div>
+      <div class="icon-item" data-label="React">     <img src="/assets/icons/react.png" alt="React"></div>
+      <div class="icon-item" data-label="Vite">      <img src="/assets/icons/vite.png" alt="Vite"></div>
+      <!-- Mobile & Cross-Platform Development -->
+      <div class="icon-item" data-label="Flutter">   <img src="/assets/icons/flutter.png" alt="Flutter"></div>
+      <!-- Backend Development -->
+      <div class="icon-item" data-label="Node.js">   <img src="/assets/icons/nodejs.png" alt="Node.js"></div>
+      <div class="icon-item" data-label="Python">    <img src="/assets/icons/python.png" alt="Python"></div>
+      <div class="icon-item" data-label="Java">      <img src="/assets/icons/java.png" alt="Java"></div>
+      <div class="icon-item" data-label="Flask">     <img src="/assets/icons/flask.png" alt="Flask"></div>
+      <!-- Databases -->
+      <div class="icon-item" data-label="MySQL">     <img src="/assets/icons/mysql.png" alt="MySQL"></div>
+      <div class="icon-item" data-label="PostgreSQL"><img src="/assets/icons/postgresql.png" alt="PostgreSQL"></div>
+      <div class="icon-item" data-label="MongoDB">   <img src="/assets/icons/mongodb.png" alt="MongoDB"></div>
+      <!-- Development Tools & IDEs -->
+      <div class="icon-item" data-label="VS Code">   <img src="/assets/icons/vscode.png" alt="VS Code"></div>
+      <div class="icon-item" data-label="Eclipse">   <img src="/assets/icons/eclipse.png" alt="Eclipse"></div>
+      <div class="icon-item" data-label="npm">       <img src="/assets/icons/npm.png" alt="npm"></div>
+      <div class="icon-item" data-label="PyCharm">   <img src="/assets/icons/pycharm.png" alt="PyCharm"></div>
+      <!-- Version Control -->
+      <div class="icon-item" data-label="GitHub">    <img src="/assets/icons/github.png" alt="GitHub"></div>
+      <!-- Documentation -->
+      <div class="icon-item" data-label="LaTeX">     <img src="/assets/icons/latex.png" alt="LaTeX"></div>
+      <!-- Operating Systems -->
+      <div class="icon-item" data-label="Kali Linux"><img src="/assets/icons/kali.png" alt="Kali Linux"></div>
+      <div class="icon-item" data-label="Windows">   <img src="/assets/icons/windows.png" alt="Windows"></div>
+      <div class="icon-item" data-label="macOS">     <img src="/assets/icons/mac.png" alt="macOS"></div>
+    </div>
+  </body>
 </html>
