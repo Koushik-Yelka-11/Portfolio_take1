@@ -1,0 +1,116 @@
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f5f3ef;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  
+
+  /* ── SCENE ── */
+  .scene {
+    position: relative;
+    width: 700px;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+
+  /* ── CENTER AVATAR ── */
+  .avatar-wrap {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 930px;
+    height: 930px;
+    
+  }
+  .avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+  /* Fallback face shown if image missing */
+  .avatar-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    background: linear-gradient(145deg, #c8cde0, #a0aac8);
+  }
+
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 20px 60px rgba(26,26,46,0.16), 0 0 0 10px rgba(26,26,46,0.05); }
+    50%      { box-shadow: 0 28px 80px rgba(26,26,46,0.22), 0 0 0 18px rgba(26,26,46,0.03); }
+  }
+
+  /* ── ICON ITEMS ── */
+  .icon-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* JS will override transform per frame via animation */
+    width: 77px;
+    height: 77px;
+    margin-left: -28px;
+    margin-top: -28px;
+    border-radius: 16px;
+    background:none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: box-shadow 0.25s;
+  }
+  .icon-item:hover {
+    box-shadow: 0 14px 36px rgba(0,0,0,0.68) !important;
+    z-index: 40 !important;
+  }
+  .icon-item img {
+    width: 77px;
+    height: 77px;
+    object-fit: fill;
+    border-radius: 14px;
+    pointer-events: none;
+    display: block;
+  }
+
+  /* Tooltip on hover */
+  .icon-item::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1a1a2e;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s, transform 0.6s;
+    letter-spacing: 0.04em;
+    z-index: 99;
+  }
+  .icon-item:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
