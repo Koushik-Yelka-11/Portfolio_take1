@@ -4,8 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skills — Portfolio</title>
-    <script src="skills.js" defer></script>
-    <link rel="stylesheet" href="skills.css">
+    
+    <style>
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f5f3ef;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* ── SCENE ── */
+  .scene {
+    position: relative;
+    width: 700px;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+
+  /* ── CENTER AVATAR ── */
+  .avatar-wrap {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 930px;
+    height: 930px;
+    
+  }
+  .avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+  /* Fallback face shown if image missing */
+  .avatar-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    background: linear-gradient(145deg, #c8cde0, #a0aac8);
+  }
+
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 20px 60px rgba(26,26,46,0.16), 0 0 0 10px rgba(26,26,46,0.05); }
+    50%      { box-shadow: 0 28px 80px rgba(26,26,46,0.22), 0 0 0 18px rgba(26,26,46,0.03); }
+  }
+
+  /* ── ICON ITEMS ── */
+  .icon-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* JS will override transform per frame via animation */
+    width: 77px;
+    height: 77px;
+    margin-left: -28px;
+    margin-top: -28px;
+    border-radius: 16px;
+    background:none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: box-shadow 0.25s;
+  }
+  .icon-item:hover {
+    box-shadow: 0 14px 36px rgba(0,0,0,0.68) !important;
+    z-index: 40 !important;
+  }
+  .icon-item img {
+    width: 77px;
+    height: 77px;
+    object-fit: fill;
+    border-radius: 14px;
+    pointer-events: none;
+    display: block;
+  }
+
+  /* Tooltip on hover */
+  .icon-item::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1a1a2e;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s, transform 0.6s;
+    letter-spacing: 0.04em;
+    z-index: 99;
+  }
+  .icon-item:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+    </style>
   </head>
 
   <body>
@@ -49,5 +165,75 @@
       <div class="icon-item" data-label="Windows">   <img src="/assets/icons/windows.png" alt="Windows"></div>
       <div class="icon-item" data-label="macOS">     <img src="/assets/icons/mac.png" alt="macOS"></div>
     </div>
+    <script>
+      
+(function () {
+  // ── Ellipse dimensions ──────────────────────────────────────────
+  const RX = 500;    // half-width  of the ellipse path (px)
+  const RY = 150;    // half-height of the ellipse path (px)
+  const SPEED = 0.0003; // radians per millisecond  (adjust to taste)
+
+  // ── Collect all icon elements ───────────────────────────────────
+  const items = Array.from(document.querySelectorAll('.icon-item'));
+  const total = items.length; // 26
+
+  // Assign each icon a starting angle evenly around the ellipse
+  const angles = items.map((_, i) => (i / total) * 2 * Math.PI);
+
+  // ── Avatar fallback ─────────────────────────────────────────────
+  const avatarImg = document.getElementById('avatarImg');
+  avatarImg.onerror = function () {
+    document.getElementById('avatarWrap').innerHTML =
+      '<div class="avatar-fallback">🧑🏻‍💻</div>';
+  };
+
+  // ── Icon image fallback ─────────────────────────────────────────
+  items.forEach(item => {
+    const img = item.querySelector('img');
+    img.onerror = function () {
+      // Show initials if image missing
+      const label = item.getAttribute('data-label') || '?';
+      const abbr  = label.slice(0, 2).toUpperCase();
+      item.innerHTML =
+        `<span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.02em;">${abbr}</span>`;
+    };
+  });
+
+  // ── Animation loop ──────────────────────────────────────────────
+  let lastTime = null;
+
+  function frame(ts) {
+    if (lastTime === null) lastTime = ts;
+    const dt = ts - lastTime;
+    lastTime = ts;
+
+    angles.forEach((angle, i) => {
+      angles[i] = angle + SPEED * dt;
+    });
+
+    items.forEach((el, i) => {
+      const a = angles[i];
+      const x = RX * Math.cos(a);
+      const y = RY * Math.sin(a);
+
+      // Depth: icons at the bottom (sin > 0) are "closer" → scale up slightly
+      const depth = (Math.sin(a) + 1) / 2; // 0 … 1
+      const scale = 0.80 + 0.28 * depth;
+      const opacity = 0.70 + 0.30 * depth;
+      const zIndex  = Math.round(1 + 18 * depth);
+
+      el.style.transform = `translate(calc(-50% + ${x.toFixed(2)}px), calc(-50% + ${y.toFixed(2)}px)) scale(${scale.toFixed(3)})`;
+      el.style.opacity   = opacity.toFixed(2);
+      el.style.zIndex    = zIndex;
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+})();
+
+    </script>
   </body>
+
 </html>
