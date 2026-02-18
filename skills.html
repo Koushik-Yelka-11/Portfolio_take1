@@ -10,13 +10,54 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: #f5f3ef;
+    background: linear-gradient(135deg, #ebedf3 0%, #ffffff 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
   }
+  /* ===== NAVIGATION BAR ===== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  background: transparent;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a1a2e;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+  color: #252525;
+  transform: scale(1.1);
+}
+.nav-link.active {
+  color: #1f1f1f;
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(33, 33, 33, 0.4);
+}
+
 
   /* ── SCENE ── */
   .scene {
@@ -125,9 +166,23 @@
   </head>
 
   <body>
-    <header class="page-header"></header>
+    <header class="navbar">
+      <!-- Navigation Buttons -->
+        <nav class="nav-links">
+            <!-- Left Side Navigation -->
+            <a href="index.html" class="nav-btn nav-home active">Home</a>
+            <a href="about.html" class="nav-btn nav-about">About</a>
+            <a href="contact.html" class="nav-btn nav-contact">Contact</a>
+
+            <!-- Right Side Navigation -->
+            <a href="skills.html" class="nav-link active">Skills</a>
+            <a href="project.html" class="nav-btn nav-project">Project</a>
+            <a href="assets/resume.pdf" class="nav-btn nav-resume">Resume</a>
+        </nav>
+    </header>
     
     <div class="scene" id="scene">
+      <a href="skills.html" class="nav-btn nav-skills">Skills</a>
 
       <div class="avatar-wrap" id="avatarWrap"> <img src="/assets/coding1.png" alt="Me" id="avatarImg" /></div>
 
