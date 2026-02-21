@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact Me</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -178,7 +179,7 @@
     input:focus, textarea:focus {
       border-color: var(--yellow);
       background: var(--white);
-      box-shadow: 0 0 0 4px rgba(245,197,24,0.12);
+      box-shadow: 0 0 0 4px rgba(144, 144, 144, 0.12);
     }
     textarea { height: 120px; }
 
@@ -207,6 +208,7 @@
       transition: all 0.22s ease;
       white-space: nowrap;
     }
+
     .btn:hover {
       background: var(--yellow);
       border-color: var(--yellow);
@@ -215,6 +217,37 @@
       box-shadow: 0 8px 24px rgba(245,197,24,0.35);
     }
     .btn:hover .arrow { transform: translateX(4px); }
+    .submit-row {
+  display: flex;
+  align-items: center;
+  gap: 30px;   /* space between elements */
+  margin-top: 20px;
+}
+
+.divider-text {
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  font-size: 1.6rem;
+  color: #000000;
+  opacity: 0.8;
+  margin: 10px 40px;   /* ← this adds space left & right */
+}
+
+.social-links {
+  display: flex;
+  gap: 20px;
+}
+
+.social-links a {
+  font-size: 1.9rem;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #000;
+  transform: scale(1.2);
+}
     .arrow { transition: transform 0.22s ease; font-size: 1.1rem; }
 
     #status { font-size: 0.85rem; font-weight: 500; min-height: 18px; }
@@ -302,7 +335,6 @@
         Feel free to connect and share your thoughts or just say hello.
         I'll get back to you as soon as possible.
       </p>
-
       <form id="contactForm" novalidate>
         <div class="form-row">
           <div class="form-group">
@@ -319,9 +351,29 @@
           <textarea id="message" name="message" placeholder="Hey, I'd love to connect about…" required></textarea>
         </div>
         <div class="submit-row">
-          <button type="submit" class="btn">Send Message <span class="arrow">→</span></button>
-          <span id="status"></span>
+          <button type="submit" class="btn">
+            Send Message <span class="arrow">→</span>
+        </button>
+        <span class="divider-text"> </span>
+
+        <div class="social-links">
+          <a href="https://github.com/Koushik-Yelka-11" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/yelka-koushik-69919632b/" target="_blank">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://www.instagram.com/programmer11x/" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://t.me/Koushik_Goud" target="_blank">
+            <i class="fab fa-telegram"></i>
+          </a>
         </div>
+        <span id="status"></span>
+        </div>
+
+        
       </form>
     </div>
 
