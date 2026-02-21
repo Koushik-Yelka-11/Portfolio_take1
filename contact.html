@@ -9,7 +9,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --yellow: #F5C518;
+      --yellow: #a19d9d;
       --black: #0f0f0f;
       --gray: #6b6b6b;
       --light-gray: #f0f0f0;
@@ -194,7 +194,7 @@
       position: absolute;
       width: 420px;
       height: 490px;
-      background: rgb(0, 183, 255);
+      background: rgb(138, 138, 138);
       border-radius: 62% 38% 46% 54% / 60% 44% 56% 40%;
       bottom: -20px;
       left: 50%;
@@ -252,11 +252,11 @@
         <div class="form-row">
           <div class="form-group">
             <label for="name">Your Name</label>
-            <input type="text" id="name" name="name" placeholder="John Doe" required />
+            <input type="text" id="name" name="name" placeholder="full name" required />
           </div>
           <div class="form-group">
             <label for="email">Your Mail</label>
-            <input type="email" id="email" name="email" placeholder="john@email.com" required />
+            <input type="email" id="email" name="email" placeholder="your mail id" required />
           </div>
         </div>
         <div class="form-group full">
@@ -306,7 +306,7 @@ img.onload = function () {
   ctx.drawImage(img, 0, 0);
 
   // Scale to fit panel
-  const targetW = 450;
+  const targetW = 580;
   canvas.style.width = targetW + 'px';
   canvas.style.height = 'auto';
 };
