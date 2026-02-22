@@ -1,1 +1,271 @@
-helo gusy
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koushik Yelka</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f0f2f8;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: block;   /* removed flex center */
+  
+}
+  .card {
+  background: #fff;
+  border-radius: 0;
+  padding: 120px 12vw 60px;   /* 👈 increase side padding */
+  width: 100%;
+  min-height: 100vh;
+  box-shadow: none;
+  display: grid;
+  grid-template-columns: 600px 300px; /* 👈 fixed width instead of 1fr */
+  justify-content: center;   /* 👈 center the grid */
+  gap: 80px;                 /* 👈 space between text & image */
+  align-items: start;
+}
+
+  .left h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 10px;
+  }
+
+  .status {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.72rem; color: #888;
+    margin-bottom: 16px;
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 6px #4ade80;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .left p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  /* Accordion */
+  .accordion {
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 11px;
+    border: 1.5px solid #e4e7f0;
+    background: #fafbfd;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .accordion.open {
+    border-color: #1A73E8;
+    box-shadow: 0 4px 20px rgba(26,115,232,0.10);
+  }
+
+  .acc-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .acc-header:hover { background: #f2f5ff; }
+
+  .acc-arrow {
+    font-size: 0.65rem;
+    color: #1A73E8;
+    font-weight: 800;
+    display: inline-block;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .accordion.open .acc-arrow { transform: rotate(90deg); }
+
+  .acc-title { font-size: 0.88rem; font-weight: 600; color: #222; }
+
+  .acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1);
+  }
+  .acc-inner { padding: 2px 18px 16px; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 16px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 4px; top: 8px; bottom: 4px;
+    width: 1.5px;
+    background: linear-gradient(to bottom, #1A73E8 60%, #c5d8fb);
+    border-radius: 2px;
+  }
+
+  .tl-item {
+    position: relative;
+    padding: 0 0 13px 16px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .tl-item.show { opacity: 1; transform: translateX(0); }
+  .tl-item:last-child { padding-bottom: 0; }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #1A73E8;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .tl-item:hover::before { background: #1A73E8; box-shadow: 0 0 8px rgba(26,115,232,0.4); }
+
+  .tl-name { font-size: 0.8rem; font-weight: 600; color: #222; }
+  .tl-place { font-size: 0.7rem; color: #999; }
+  .tl-year {
+    display: inline-block;
+    font-size: 0.66rem;
+    color: #1A73E8;
+    background: #e8f0fe;
+    border-radius: 100px;
+    padding: 1px 9px;
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  .exp-empty { font-size: 0.78rem; color: #bbb; padding: 2px 0; }
+
+  /* Photo */
+  .photo-wrap {
+    border-radius: 20px;
+    overflow: hidden;
+    background: #ffe253;
+    aspect-ratio: 3/4;
+    box-shadow: 0 16px 40px rgba(26,115,232,0.15);
+    position: relative;
+  }
+  .photo-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 10%;
+    display: block;
+  }
+  .photo-badge {
+    position: absolute;
+    bottom: 10px; left: 10px; right: 10px;
+    background: rgba(197, 197, 197, 0.69);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    padding: 8px 12px;
+  }
+  .badge-name { font-size: 0.76rem; font-weight: 700; color: #111; }
+  .badge-role { font-size: 0.64rem; color: #444444; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="left">
+    <h1>Hello! 👋</h1>
+    <div class="status"><span class="dot"></span> Open to internships &amp; collaborations</div>
+    <p>
+      I'm <strong>Koushik Yelka</strong>, a 2nd year B.Tech student at IARE, passionate about
+      Data Science and innovation. I love discovering new tools, experimenting with technologies,
+      and understanding how things work behind the scenes. My curiosity drives me to explore
+      the unknown and build solutions that make a difference.
+    </p>
+
+    <!-- Education Accordion -->
+    <div class="accordion" id="edu">
+      <div class="acc-header" onclick="toggle('edu')">
+        <span class="acc-arrow">▶</span>
+        <span class="acc-title">Education</span>
+      </div>
+      <div class="acc-body" id="edu-body">
+        <div class="acc-inner">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-name">Middle School</div>
+              <div class="tl-place">JNV Nalgonda, Telangana, India</div>
+              <div class="tl-year">2017 – 2019</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-name">Secondary School</div>
+              <div class="tl-place">JNV Nalgonda, Telangana, India</div>
+              <div class="tl-year">2019 – 2022</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-name">Senior Secondary School</div>
+              <div class="tl-place">JNV Nalgonda, Telangana, India</div>
+              <div class="tl-year">2022 – 2024</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-name">Undergraduate — B.Tech</div>
+              <div class="tl-place">IARE Dundigal, Telangana, India</div>
+              <div class="tl-year">2024 – 2028 · Present</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience Accordion -->
+    <div class="accordion" id="exp">
+      <div class="acc-header" onclick="toggle('exp')">
+        <span class="acc-arrow">▶</span>
+        <span class="acc-title">Experience</span>
+      </div>
+      <div class="acc-body" id="exp-body">
+        <div class="acc-inner">
+          <div class="exp-empty">🚀 Exciting experiences coming soon!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo -->
+  <div class="photo-wrap">
+    <img src="/assets/Koushik4.jpeg" alt="Koushik Yelka"
+         onerror="this.style.display='none'">
+    <div class="photo-badge">
+      <div class="badge-name">Koushik Goud</div>
+      <div class="badge-role">B.Tech · IARE · 2nd Year</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggle(id) {
+    const acc = document.getElementById(id);
+    const body = document.getElementById(id + '-body');
+    const isOpen = acc.classList.contains('open');
+
+    document.querySelectorAll('.accordion').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.acc-body').forEach(b => b.style.maxHeight = '0');
+    document.querySelectorAll('.tl-item').forEach(i => i.classList.remove('show'));
+
+    if (!isOpen) {
+      acc.classList.add('open');
+      body.style.maxHeight = '400px';
+      body.querySelectorAll('.tl-item').forEach((item, i) => {
+        setTimeout(() => item.classList.add('show'), i * 80 + 50);
+      });
+    }
+  }
+
+</script>
+
+</body>
+</html>
